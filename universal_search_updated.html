@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Mind Search</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+.title {
+            font-family: 'Dancing Script', cursive;
+            text-align: center;
+            font-size: 3.5em;
+            font-weight: 800;
+            color: #9c88ff;
+            margin-bottom: 30px;
+            letter-spacing: -0.5px;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .search-container {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 16px 20px;
+            font-size: 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            outline: none;
+            transition: all 0.2s ease;
+            background: #f9fafb;
+        }
+
+        .search-input:focus {
+            border-color: #9c88ff;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(156, 136, 255, 0.1);
+        }
+
+        .search-button {
+            padding: 16px 32px;
+            font-size: 16px;
+            font-weight: 500;
+            color: white;
+            background: linear-gradient(135deg, #9c88ff 0%, #7c3aed 100%);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .search-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(156, 136, 255, 0.4);
+        }
+
+        .search-button:active {
+            transform: translateY(0);
+        }
+
+        .search-all-button {
+            padding: 16px 32px;
+            font-size: 16px;
+            font-weight: 500;
+            color: white;
+            background: linear-gradient(135deg, #00bcd4 0%, #8e44ad 100%);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .search-all-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(11, 159, 245, 0.4);
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .control-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .control-select {
+            padding: 12px 16px;
+            font-size: 14px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 12px center;
+            background-repeat: no-repeat;
+            background-size: 16px;
+            padding-right: 40px;
+        }
+
+        .control-select:focus {
+            border-color: #9c88ff;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(156, 136, 255, 0.1);
+        }
+
+        .options-row {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .checkbox {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #d1d5db;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .checkbox.checked {
+            background: #9c88ff;
+            border-color: #9c88ff;
+        }
+
+        .checkbox.checked::after {
+            content: '✓';
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .checkbox-label {
+            font-size: 14px;
+            color: #374151;
+            font-weight: 500;
+        }
+
+        .ai-mode-indicator {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-left: 8px;
+        }
+
+        .engine-shortcuts {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .ai-shortcuts {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .shortcuts-section {
+            margin-bottom: 20px;
+        }
+
+        .shortcuts-title {
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: #6b7280;
+            margin-bottom: 12px;
+        }
+
+        .engine-btn {
+            width: 48px;
+            height: 48px;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .engine-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .engine-btn.active {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .engine-btn-google {
+            background: linear-gradient(135deg, #4285f4 0%, #34a853 100%);
+        }
+
+        .engine-btn-bing {
+            background: linear-gradient(135deg, #0078d4 0%, #106ebe 100%);
+        }
+
+        .engine-btn-duckduckgo {
+            background: linear-gradient(135deg, #de5833 0%, #c44a2c 100%);
+        }
+
+        .engine-btn-yahoo {
+            background: linear-gradient(135deg, #410093 0%, #7b2cbf 100%);
+        }
+
+        .engine-btn-reddit {
+            background: linear-gradient(135deg, #ff4500 0%, #ff5722 100%);
+        }
+
+        .engine-btn-copilot {
+            background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+        }
+
+        .engine-btn-chatgpt {
+            background: linear-gradient(135deg, #10a37f 0%, #1a7f64 100%);
+        }
+
+        .engine-btn-all {
+            background: linear-gradient(135deg, #f9d423 0%, #ff4e50 100%);
+            width: 80px;
+            font-size: 12px;
+        }
+
+        .tooltip {
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1f2937;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+            z-index: 1000;
+        }
+
+        .engine-btn:hover .tooltip {
+            opacity: 1;
+        }
+
+        .link-detection {
+            margin-top: 10px;
+            padding: 12px;
+            background: #f3f4f6;
+            border-radius: 8px;
+            border-left: 4px solid #10b981;
+            display: none;
+        }
+
+        .link-detection.visible {
+            display: block;
+        }
+
+        .link-detection-text {
+            font-size: 14px;
+            color: #059669;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .detected-link {
+            font-size: 12px;
+            color: #6b7280;
+            word-break: break-all;
+            background: white;
+            padding: 6px 8px;
+            border-radius: 4px;
+            margin-top: 4px;
+        }
+
+        .status-message {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .status-message.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+
+        .status-message.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .status-message.info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #93c5fd;
+        }
+
+        .shortcuts-info {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .shortcuts-info-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .shortcuts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 8px;
+        }
+
+        .shortcut-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .shortcut-key {
+            background: #e5e7eb;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .search-container {
+                padding: 20px;
+            }
+
+            .title {
+                font-size: 2em;
+            }
+
+            .search-form {
+                flex-direction: column;
+            }
+
+            .controls-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .options-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .shortcuts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .engine-shortcuts,
+            .ai-shortcuts {
+                justify-content: center;
+            }
+        }
+
+        /* Accessibility improvements */
+        .search-input:focus,
+        .search-button:focus,
+        .search-all-button:focus,
+        .control-select:focus,
+        .engine-btn:focus {
+            outline: 3px solid #9c88ff;
+            outline-offset: 2px;
+        }
+
+        .checkbox:focus {
+            outline: 2px solid #9c88ff;
+            outline-offset: 2px;
+        }
+
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .search-container {
+                border: 2px solid #000;
+            }
+            
+            .search-input,
+            .control-select {
+                border-color: #000;
+            }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <h1 class="title">Open Mind Search</h1>
+        
+        <form class="search-form" id="searchForm">
+            <input 
+                type="text" 
+                class="search-input" 
+                id="searchInput" 
+                placeholder="Search anything or enter a URL..."
+                aria-label="Search query or URL"
+                autocomplete="off"
+                required
+            >
+            <button type="submit" class="search-button">
+                <span>🔍</span>
+                <span>Search</span>
+            </button>
+            <button type="button" class="search-all-button" id="searchAllButton">
+                <span>🚀</span>
+                <span>Search All</span>
+            </button>
+        </form>
+
+        <div class="link-detection" id="linkDetection">
+            <div class="link-detection-text">🔗 URL detected</div>
+            <div class="detected-link" id="detectedLink"></div>
+        </div>
+
+        <div class="controls-grid">
+            <div class="control-group">
+                <label class="control-label" for="searchEngine">Search Engine</label>
+                <select class="control-select" id="searchEngine">
+                    <option value="google">Google</option>
+                    <option value="bing">Bing</option>
+                    <option value="duckduckgo">DuckDuckGo</option>
+                    <option value="yahoo">Yahoo</option>
+                    <option value="reddit">Reddit</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="aiEngine">AI Assistant</label>
+                <select class="control-select" id="aiEngine">
+                    <option value="none">None</option>
+                    <option value="copilot">Copilot</option>
+                    <option value="chatgpt">ChatGPT</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="searchType">Search Type</label>
+                <select class="control-select" id="searchType">
+                    <option value="web">🌐 Web</option>
+                    <option value="images">🖼️ Images</option>
+                    <option value="videos">🎥 Videos</option>
+                    <option value="news">📰 News</option>
+                    <option value="shopping">🛒 Shopping</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="timeFilter">Time Filter</label>
+                <select class="control-select" id="timeFilter">
+                    <option value="any">🕐 Any time</option>
+                    <option value="day">📅 Past day</option>
+                    <option value="week">📅 Past week</option>
+                    <option value="month">📅 Past month</option>
+                    <option value="year">📅 Past year</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="options-row">
+            <div class="checkbox-group" id="safeSearchGroup">
+                <div class="checkbox" id="safeSearchCheckbox"></div>
+                <label class="checkbox-label">🛡️ Safe Search</label>
+            </div>
+            
+            <div class="checkbox-group" id="newTabGroup">
+                <div class="checkbox checked" id="newTabCheckbox"></div>
+                <label class="checkbox-label">🔗 New Tab</label>
+            </div>
+
+            <div class="checkbox-group" id="aiModeGroup">
+                <div class="checkbox" id="aiModeCheckbox"></div>
+                <label class="checkbox-label">🤖 AI Mode</label>
+                <span class="ai-mode-indicator" id="aiModeIndicator" style="display: none;">AI</span>
+            </div>
+        </div>
+
+        <div class="shortcuts-section">
+            <div class="shortcuts-title">Search Engines</div>
+            <div class="engine-shortcuts">
+                <button type="button" class="engine-btn engine-btn-google active" data-engine="google">
+                    G
+                    <div class="tooltip">Google (Alt+G)</div>
+                </button>
+                <button type="button" class="engine-btn engine-btn-bing" data-engine="bing">
+                    B
+                    <div class="tooltip">Bing (Alt+B)</div>
+                </button>
+                <button type="button" class="engine-btn engine-btn-duckduckgo" data-engine="duckduckgo">
+                    D
+                    <div class="tooltip">DuckDuckGo (Alt+D)</div>
+                </button>
+                <button type="button" class="engine-btn engine-btn-yahoo" data-engine="yahoo">
+                    Y
+                    <div class="tooltip">Yahoo (Alt+Y)</div>
+                </button>
+                <button type="button" class="engine-btn engine-btn-reddit" data-engine="reddit">
+                    R
+                    <div class="tooltip">Reddit (Alt+R)</div>
+                </button>
+                <button type="button" class="engine-btn engine-btn-all" id="searchAllEngines">
+                    ALL
+                    <div class="tooltip">Search All Engines (Alt+A)</div>
+                </button>
+            </div>
+        </div>
+
+        <div class="shortcuts-section">
+            <div class="shortcuts-title">AI Assistants</div>
+            <div class="ai-shortcuts">
+                <button type="button" class="engine-btn engine-btn-copilot" data-ai="copilot">
+                    C
+                    <div class="tooltip">Copilot (Alt+C)</div>
+                </button>
+                <button type="button" class="engine-btn engine-btn-chatgpt" data-ai="chatgpt">
+                    GPT
+                    <div class="tooltip">ChatGPT (Alt+T)</div>
+                </button>
+                <button type="button" class="engine-btn engine-btn-all" id="searchAllAI">
+                    ALL
+                    <div class="tooltip">Search All AI (Alt+I)</div>
+                </button>
+            </div>
+        </div>
+
+        <div class="status-message" id="statusMessage"></div>
+
+        <div class="shortcuts-info">
+            <div class="shortcuts-info-title">
+                <span>⌨️</span>
+                <span>Keyboard Shortcuts</span>
+            </div>
+            <div class="shortcuts-grid">
+                <div class="shortcut-item">
+                    <span class="shortcut-key">Ctrl + /</span>
+                    <span>Focus search</span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-key">Enter</span>
+                    <span>Search</span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-key">Alt + G</span>
+                    <span>Google</span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-key">Alt + B</span>
+                    <span>Bing</span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-key">Alt + D</span>
+                    <span>DuckDuckGo</span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-key">Alt + Y</span>
+                    <span>Yahoo</span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-key">Alt + R</span>
+                    <span>Reddit</span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-key">Alt + C</span>
+                    <span>Copilot</span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-key">Alt + T</span>
+                    <span>ChatGPT</span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-key">Alt + A</span>
+                    <span>All Engines</span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-key">Alt + I</span>
+                    <span>All AI</span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-key">Ctrl + Enter</span>
+                    <span>Search All</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class UniversalSearch {
+            constructor() {
+                this.searchForm = document.getElementById('searchForm');
+                this.searchInput = document.getElementById('searchInput');
+                this.searchEngine = document.getElementById('searchEngine');
+                this.aiEngine = document.getElementById('aiEngine');
+                this.searchType = document.getElementById('searchType');
+                this.timeFilter = document.getElementById('timeFilter');
+                this.searchAllButton = document.getElementById('searchAllButton');
+                this.searchAllEngines = document.getElementById('searchAllEngines');
+                this.searchAllAI = document.getElementById('searchAllAI');
+                this.statusMessage = document.getElementById('statusMessage');
+                this.linkDetection = document.getElementById('linkDetection');
+                this.detectedLink = document.getElementById('detectedLink');
+                this.aiModeGroup = document.getElementById('aiModeGroup');
+                this.aiModeCheckbox = document.getElementById('aiModeCheckbox');
+                this.aiModeIndicator = document.getElementById('aiModeIndicator');
+                
+                // Default settings
+                this.safeSearch = false;
+                this.newTab = true;
+                this.aiMode = false;
+                this.detectedUrl = null;
+
+                this.init();
+            }
+
+            init() {
+                this.loadSettings();
+                this.setupEventListeners();
+                this.setupKeyboardShortcuts();
+                this.updateUI();
+            }
+
+            // localStorage methods
+            saveSettings() {
+                const settings = {
+                    searchEngine: this.searchEngine.value,
+                    aiEngine: this.aiEngine.value,
+                    searchType: this.searchType.value,
+                    timeFilter: this.timeFilter.value,
+                    safeSearch: this.safeSearch,
+                    newTab: this.newTab,
+                    aiMode: this.aiMode
+                };
+                
+                try {
+                    if (typeof(Storage) !== "undefined") {
+                        localStorage.setItem('universalSearchSettings', JSON.stringify(settings));
+                    }
+                } catch (error) {
+                    console.warn('Could not save settings:', error);
+                }
+            }
+
+            loadSettings() {
+                try {
+                    if (typeof(Storage) !== "undefined") {
+                        const savedSettings = localStorage.getItem('universalSearchSettings');
+                        if (savedSettings) {
+                            const settings = JSON.parse(savedSettings);
+                            
+                            // Apply saved settings
+                            this.searchEngine.value = settings.searchEngine || 'google';
+                            this.aiEngine.value = settings.aiEngine || 'none';
+                            this.searchType.value = settings.searchType || 'web';
+                            this.timeFilter.value = settings.timeFilter || 'any';
+                            this.safeSearch = settings.safeSearch !== undefined ? settings.safeSearch : false;
+                            this.newTab = settings.newTab !== undefined ? settings.newTab : true;
+                            this.aiMode = settings.aiMode !== undefined ? settings.aiMode : false;
+                            
+                            this.showStatusMessage('Previous settings restored', 'info');
+                        }
+                    }
+                } catch (error) {
+                    console.warn('Could not load settings:', error);
+                }
+            }
+
+            updateUI() {
+                // Update checkboxes
+                document.getElementById('safeSearchCheckbox').classList.toggle('checked', this.safeSearch);
+                document.getElementById('newTabCheckbox').classList.toggle('checked', this.newTab);
+                document.getElementById('aiModeCheckbox').classList.toggle('checked', this.aiMode);
+                
+                // Update engine buttons
+                this.updateEngineSelection();
+                this.updateAiSelection();
+                this.updateAiModeIndicator();
+            }
+
+            setupEventListeners() {
+                // Form submission
+                this.searchForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.performSearch();
+                });
+
+                // Search All button
+                this.searchAllButton.addEventListener('click', () => {
+                    this.performSearchAll();
+                });
+
+                this.searchAllEngines.addEventListener('click', () => {
+                    this.performSearchAllEngines();
+                });
+
+                this.searchAllAI.addEventListener('click', () => {
+                    this.performSearchAllAI();
+                });
+
+                // Search input changes
+                this.searchInput.addEventListener('input', () => {
+                    this.detectUrl();
+                });
+
+                // Engine selection
+                this.searchEngine.addEventListener('change', () => {
+                    this.updateEngineSelection();
+                    this.saveSettings();
+                });
+
+                // AI Engine selection
+                this.aiEngine.addEventListener('change', () => {
+                    this.updateAiSelection();
+                    this.saveSettings();
+                });
+
+                // Search type and time filter changes
+                this.searchType.addEventListener('change', () => {
+                    this.saveSettings();
+                });
+
+                this.timeFilter.addEventListener('change', () => {
+                    this.saveSettings();
+                });
+
+                // Engine shortcut buttons
+                document.querySelectorAll('.engine-btn[data-engine]').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const engine = btn.dataset.engine;
+                        this.selectEngine(engine);
+                    });
+                });
+
+                // AI shortcut buttons
+                document.querySelectorAll('.engine-btn[data-ai]').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const ai = btn.dataset.ai;
+                        this.selectAI(ai);
+                    });
+                });
+
+                // Checkbox groups
+                this.setupCheckboxGroup('safeSearchGroup', 'safeSearch');
+                this.setupCheckboxGroup('newTabGroup', 'newTab');
+                this.setupCheckboxGroup('aiModeGroup', 'aiMode');
+            }
+
+            setupCheckboxGroup(groupId, property) {
+                const group = document.getElementById(groupId);
+                const checkbox = group.querySelector('.checkbox');
+                
+                group.addEventListener('click', () => {
+                    this[property] = !this[property];
+                    checkbox.classList.toggle('checked', this[property]);
+                    
+                    if (property === 'aiMode') {
+                        this.updateAiModeIndicator();
+                    }
+                    
+                    this.saveSettings();
+                });
+            }
+
+            setupKeyboardShortcuts() {
+                document.addEventListener('keydown', (e) => {
+                    if (e.ctrlKey && e.key === '/') {
+                        e.preventDefault();
+                        this.searchInput.focus();
+                    }
+
+                    if (e.ctrlKey && e.key === 'Enter') {
+                        e.preventDefault();
+                        this.performSearchAll();
+                    }
+
+                    if (e.altKey) {
+                        switch (e.key.toLowerCase()) {
+                            case 'g':
+                                e.preventDefault();
+                                this.selectEngine('google');
+                                break;
+                            case 'b':
+                                e.preventDefault();
+                                this.selectEngine('bing');
+                                break;
+                            case 'd':
+                                e.preventDefault();
+                                this.selectEngine('duckduckgo');
+                                break;
+                            case 'y':
+                                e.preventDefault();
+                                this.selectEngine('yahoo');
+                                break;
+                            case 'r':
+                                e.preventDefault();
+                                this.selectEngine('reddit');
+                                break;
+                            case 'c':
+                                e.preventDefault();
+                                this.selectAI('copilot');
+                                break;
+                            case 't':
+                                e.preventDefault();
+                                this.selectAI('chatgpt');
+                                break;
+                            case 'a':
+                                e.preventDefault();
+                                this.performSearchAllEngines();
+                                break;
+                            case 'i':
+                                e.preventDefault();
+                                this.performSearchAllAI();
+                                break;
+                        }
+                    }
+                });
+            }
+
+            detectUrl() {
+                const query = this.searchInput.value.trim();
+                const urlRegex = /^(https?:\/\/)?([\w.-]+)\.([a-z]{2,})(\/[^\s]*)?$/i;
+                
+                if (urlRegex.test(query)) {
+                    this.detectedUrl = query.startsWith('http') ? query : `https://${query}`;
+                    this.detectedLink.textContent = this.detectedUrl;
+                    this.linkDetection.classList.add('visible');
+                    this.showStatusMessage('URL detected - will open directly', 'info');
+                } else {
+                    this.detectedUrl = null;
+                    this.linkDetection.classList.remove('visible');
+                }
+            }
+
+            selectEngine(engine) {
+                this.searchEngine.value = engine;
+                this.updateEngineSelection();
+                this.saveSettings();
+                this.showStatusMessage(`Switched to ${engine.charAt(0).toUpperCase() + engine.slice(1)}`, 'success');
+            }
+
+            selectAI(ai) {
+                this.aiEngine.value = ai;
+                this.updateAiSelection();
+                this.saveSettings();
+                this.showStatusMessage(`Switched to ${ai === 'copilot' ? 'Copilot' : 'ChatGPT'}`, 'success');
+            }
+
+            updateEngineSelection() {
+                document.querySelectorAll('.engine-btn[data-engine]').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.engine === this.searchEngine.value);
+                });
+            }
+
+            updateAiSelection() {
+                document.querySelectorAll('.engine-btn[data-ai]').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.ai === this.aiEngine.value);
+                });
+            }
+
+            updateAiModeIndicator() {
+                this.aiModeIndicator.style.display = this.aiMode ? 'inline' : 'none';
+            }
+
+            buildSearchUrl(engine, query) {
+                const encodedQuery = encodeURIComponent(query);
+                const safeParam = this.safeSearch ? '&safe=active' : '';
+                const timeParam = this.getTimeParam();
+                const typeParam = this.getTypeParam();
+
+                const urls = {
+                    google: `https://www.google.com/search?q=${encodedQuery}${safeParam}${timeParam}${typeParam}`,
+                    bing: `https://www.bing.com/search?q=${encodedQuery}${safeParam}${timeParam}${typeParam}`,
+                    duckduckgo: `https://duckduckgo.com/?q=${encodedQuery}${safeParam}${timeParam}${typeParam}`,
+                    yahoo: `https://search.yahoo.com/search?p=${encodedQuery}${safeParam}${timeParam}${typeParam}`,
+                    reddit: `https://www.reddit.com/search/?q=${encodedQuery}${timeParam}`,
+                    baidu: `https://www.baidu.com/s?wd=${encodedQuery}${safeParam}${timeParam}`,
+                    yandex: `https://yandex.com/search/?text=${encodedQuery}${safeParam}${timeParam}`
+                };
+
+                return urls[engine] || urls.google;
+            }
+
+            buildAiSearchUrl(engine, query) {
+                const encodedQuery = encodeURIComponent(query);
+                
+                if (engine === 'google') {
+                    // Use the provided Google AI URL format
+                    return `https://www.google.com/search?q=${encodedQuery}&sca_esv=5c667d51da7e204e&sxsrf=AE3TifPj_KNAO2_YBl0oq81Flr1WIzNYHg%3A1753163515390&udm=50&fbs=AIIjpHxU7SXXniUZfeShr2fp4giZ1Y6MJ25_tmWITc7uy4KIeoJTKjrFjVxydQWqI2NcOhZVmrJB8DQUK5IzxA2fZbQFa0RauFAlQ1SyDSugaQMAQZwdGIa3rDOzy5SNjZlWx5mKZ2h9aAbY_geXEqDTb8QOp0efwnqZU-z2NpITRP9dIgZUsqHS85ku9pnXQB8A5mU3fBnbCR37nGHkIN7DOAREByt5MA&aep=1&ntc=1&sa=X&ved=2ahUKEwjIqsWE48-OAxV7UGwGHf4mMMoQ2J8OegQIExAC&mstk=AUtExfDBGdF01Go9vBKzAgNk9WRY9sSVZYwi1BDSAFfnN4DQdDR1ia-AGZO0xM4ymdDVXpJ0QD3NJ_gSG0qCDqAE6JmHF-01sELGAIoQZhzx5v8o3MWO-XN7hX6cmYB782Y74jAO6xWmJdr_y8ixAdNZf3DqX9p0l_4a8jM&csuir=1&mtid=_iZ_aIi9JsCPseMPgfbrgAg`;
+                } else if (engine === 'bing') {
+                    // Use the provided Bing Copilot URL format
+                    return `https://copilot.microsoft.com/?prompt=${encodedQuery}&sendquery=1&FORM=SCCODX&showconv=1`;
+                }
+                
+                return null;
+            }
+
+            buildAiUrl(ai, query) {
+                const encodedQuery = encodeURIComponent(query);
+                
+                const urls = {
+                    copilot: `https://copilot.microsoft.com/?prompt=${encodedQuery}&sendquery=1&FORM=SCCODX&showconv=1`,
+                    chatgpt: `https://chatgpt.com/?prompt=${encodedQuery}&sendquery=1&FORM=SCCODX&showconv=1`
+                };
+
+                return urls[ai];
+            }
+
+            getTimeParam() {
+                const timeMap = {
+                    'any': '',
+                    'day': '&tbs=qdr:d',
+                    'week': '&tbs=qdr:w',
+                    'month': '&tbs=qdr:m',
+                    'year': '&tbs=qdr:y'
+                };
+                return timeMap[this.timeFilter.value] || '';
+            }
+
+            getTypeParam() {
+                const typeMap = {
+                    'web': '',
+                    'images': '&tbm=isch',
+                    'videos': '&tbm=vid',
+                    'news': '&tbm=nws',
+                    'shopping': '&tbm=shop'
+                };
+                return typeMap[this.searchType.value] || '';
+            }
+
+            performSearch() {
+                const query = this.searchInput.value.trim();
+                
+                if (!query) {
+                    this.showStatusMessage('Please enter a search query', 'error');
+                    return;
+                }
+
+                // If URL is detected, open it directly
+                if (this.detectedUrl) {
+                    this.openUrl(this.detectedUrl);
+                    this.showStatusMessage('Opening URL directly...', 'success');
+                    return;
+                }
+
+                // Check if AI is selected from dropdown (highest priority)
+                if (this.aiEngine.value !== 'none') {
+                    const aiUrl = this.buildAiUrl(this.aiEngine.value, query);
+                    this.openUrl(aiUrl);
+                    this.showStatusMessage(`Searching with ${this.aiEngine.value === 'copilot' ? 'Copilot' : 'ChatGPT'}...`, 'success');
+                    return;
+                }
+
+                // Check if AI Mode is enabled for Google/Bing (second priority)
+                if (this.aiMode && (this.searchEngine.value === 'google' || this.searchEngine.value === 'bing')) {
+                    const aiSearchUrl = this.buildAiSearchUrl(this.searchEngine.value, query);
+                    if (aiSearchUrl) {
+                        this.openUrl(aiSearchUrl);
+                        this.showStatusMessage(`Searching with ${this.searchEngine.value.charAt(0).toUpperCase() + this.searchEngine.value.slice(1)} AI Mode...`, 'success');
+                        return;
+                    }
+                }
+
+                // Regular search engine (default)
+                const searchUrl = this.buildSearchUrl(this.searchEngine.value, query);
+                this.openUrl(searchUrl);
+                this.showStatusMessage(`Searching with ${this.searchEngine.value.charAt(0).toUpperCase() + this.searchEngine.value.slice(1)}...`, 'success');
+            }
+
+            performSearchAll() {
+                const query = this.searchInput.value.trim();
+                
+                if (!query) {
+                    this.showStatusMessage('Please enter a search query', 'error');
+                    return;
+                }
+
+                // If URL is detected, open it directly
+                if (this.detectedUrl) {
+                    this.openUrl(this.detectedUrl);
+                    this.showStatusMessage('Opening URL directly...', 'success');
+                    return;
+                }
+
+                // Search all engines
+                this.performSearchAllEngines();
+                
+                // Search all AI if available
+                setTimeout(() => {
+                    this.performSearchAllAI();
+                }, 1000);
+            }
+
+            performSearchAllEngines() {
+                const query = this.searchInput.value.trim();
+                
+                if (!query) {
+                    this.showStatusMessage('Please enter a search query', 'error');
+                    return;
+                }
+
+                const engines = ['google', 'bing', 'duckduckgo', 'yahoo', 'reddit'];
+                let count = 0;
+
+                engines.forEach((engine, index) => {
+                    setTimeout(() => {
+                        const searchUrl = this.buildSearchUrl(engine, query);
+                        this.openUrl(searchUrl);
+                        count++;
+                        
+                        if (count === engines.length) {
+                            this.showStatusMessage(`Opened ${count} search engines`, 'success');
+                        }
+                    }, index * 300); // Stagger the opens to prevent browser blocking
+                });
+            }
+
+            performSearchAllAI() {
+                const query = this.searchInput.value.trim();
+                
+                if (!query) {
+                    this.showStatusMessage('Please enter a search query', 'error');
+                    return;
+                }
+
+                const aiEngines = ['copilot', 'chatgpt'];
+                let count = 0;
+
+                aiEngines.forEach((ai, index) => {
+                    setTimeout(() => {
+                        const aiUrl = this.buildAiUrl(ai, query);
+                        this.openUrl(aiUrl);
+                        count++;
+                        
+                        if (count === aiEngines.length) {
+                            this.showStatusMessage(`Opened ${count} AI assistants`, 'success');
+                        }
+                    }, index * 500); // Stagger the opens
+                });
+            }
+
+            openUrl(url) {
+                if (this.newTab) {
+                    window.open(url, '_blank');
+                } else {
+                    window.location.href = url;
+                }
+            }
+
+            showStatusMessage(message, type) {
+                this.statusMessage.textContent = message;
+                this.statusMessage.className = `status-message ${type}`;
+                this.statusMessage.style.display = 'block';
+                
+                setTimeout(() => {
+                    this.statusMessage.style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        // Initialize the application when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new UniversalSearch();
+        });
+    </script>
+</body>
+</html>
